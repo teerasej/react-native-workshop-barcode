@@ -50,7 +50,8 @@ export default class HomePage extends React.Component {
     }
 
     onGotBarcode = (barcode) => {
-        
+        console.log('Barcode', barcode)
+        this.setState({ barcodeData: barcode });
     }
 
     render() {

@@ -18,6 +18,7 @@ import {
   Input,
   Label
 } from "native-base";
+import { BarCodeScanner, Permissions } from 'expo';
 
 export default class ScannerPage extends React.Component {
 
@@ -38,7 +39,8 @@ export default class ScannerPage extends React.Component {
   }
 
   async componentDidMount() {
-    
+    const { status } = await Permissions.askAsync(Permissions.CAMERA);
+    this.setState({ hasCameraPermission: status === 'granted' });
   }
 
   async componentWillMount() {
@@ -56,11 +58,20 @@ export default class ScannerPage extends React.Component {
       return <Expo.AppLoading />;
     }
 
+    const { hasCameraPermission } = this.state;
 
-
+    if (hasCameraPermission === null) {
+      return <Text>Requesting for camera permission</Text>;
+    }
+    if (hasCameraPermission === false) {
+      return <Text>No access to camera</Text>;
+    }
     return (
       <View style={{ flex: 1 }}>
-        
+        <BarCodeScanner
+          onBarCodeScanned={this.handleBarCodeScanned}
+          style={StyleSheet.absoluteFill}
+        />
         <Button block style={styles.button} onPress={()=>{this.cancel()}}>
               <Text>
                   Cancel
@@ -75,7 +86,9 @@ export default class ScannerPage extends React.Component {
   }
 
   handleBarCodeScanned = ({ type, data }) => {
-    
+    console.log(`Bar code with type ${type} and data ${data} has been scanned!`);
+    this.props.navigation.goBack();
+    this.props.navigation.state.params.onGotBarcode(data);
   }
 }
 
