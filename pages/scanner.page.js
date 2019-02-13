@@ -18,7 +18,6 @@ import {
   Input,
   Label
 } from "native-base";
-import { BarCodeScanner, Permissions } from 'expo';
 
 export default class ScannerPage extends React.Component {
 
@@ -57,7 +56,7 @@ export default class ScannerPage extends React.Component {
       return <Expo.AppLoading />;
     }
 
-    
+
 
     return (
       <View style={{ flex: 1 }}>
