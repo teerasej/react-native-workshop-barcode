@@ -50,10 +50,7 @@ export default class HomePage extends React.Component {
     }
 
     onGotBarcode = (barcode) => {
-        console.log('Barcode:', barcode);
-        this.setState({
-            barcodeData: barcode
-        })
+        
     }
 
     render() {
@@ -62,24 +59,16 @@ export default class HomePage extends React.Component {
         }
 
         return (
-
-
-
             <Content style={styles.content}>
-
                 <Button block onPress={() => { this.openScanner() }}>
                     <Text>
                         Scan
                     </Text>
                 </Button>
-
                 <View>
                     <Text>{this.state.barcodeData}</Text>
                 </View>
-
             </Content>
-
-
         )
     }
 
